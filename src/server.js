@@ -11,10 +11,14 @@ app.use(express.json());
 app.use(cors());
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-  
-}).then(() => console.log('MongoDB Connected Successfully'))
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Connected Successfully'))
   .catch((err) => console.log(err));
+
+// Root route to prevent "Cannot GET /" error
+app.get('/', (req, res) => {
+  res.send('API is running...');
+});
 
 // API Routes
 app.use('/api/projects', projectRoutes);
